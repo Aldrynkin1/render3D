@@ -1,4 +1,5 @@
 #include "../include/WindowManager.hpp"
+#include "../include/PixelsBuffer.hpp"
 
 namespace Render3D
 {

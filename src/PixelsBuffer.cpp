@@ -18,9 +18,10 @@ namespace Render3D
         }
     }
 
-    const void PixelsBuffer::set_pixel(size_t x, size_t y, sf::Color color) noexcept
+    void PixelsBuffer::set_pixel(size_t x, size_t y, sf::Color color) noexcept
     {
-        if (x >= m_width || y >= m_height) return;
+        if (x >= m_width || y >= m_height)
+            return;
 
         size_t index = (y * m_width + x) * 4;
         m_data[index] = color.r;     // red
@@ -28,5 +29,46 @@ namespace Render3D
         m_data[index + 2] = color.b; // blue
         m_data[index + 3] = color.a; // alfa (прозрачный)
     }
-    
+
+    void PixelsBuffer::draw_line(int x1, int y1, int x2, int y2, sf::Color color) noexcept
+    {
+        int direct_x = x1 - x2;
+        if (direct_x < 0)
+        {
+            direct_x = -direct_x;
+        }
+
+        int direct_y = y1 - y2;
+        if (direct_y < 0)
+        {
+            direct_y = -direct_y;
+        }
+
+        int side_x = (x1 < x2) ? 1 : -1;
+        int side_y = (y1 < y2) ? 1 : -1;
+
+        int err = direct_x - direct_y;
+
+        while (true)
+        {
+            if (x1 >= 0 && y1 >= 0)
+            {
+                set_pixel(static_cast<size_t>(x1), static_cast<size_t>(y1), color);
+            }
+            if (x1 == x2 && y1 == y2)
+                break;
+            int next_pixel = err * 2;
+
+            if (next_pixel > -direct_y)
+            {
+                err -= direct_y;
+                x1 += side_x;
+            }
+            if (next_pixel < direct_x)
+            {
+                err += direct_x;
+                y1 += side_y;
+            }
+        }
+    }
 }

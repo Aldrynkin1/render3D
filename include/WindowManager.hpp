@@ -1,9 +1,11 @@
+#pragma once
+
 #include "SFML/Graphics.hpp"
-#include "PixelsBuffer.hpp"
 
 namespace Render3D
 {
     class PixelsBuffer;
+
     class WindowManager
     {
     private:
@@ -17,11 +19,10 @@ namespace Render3D
     public:
         WindowManager(unsigned int width, unsigned int height);
         ~WindowManager() = default;
-        
+
         void event_listener();
         void render(const PixelsBuffer &buffer);
 
-        inline bool is_open() const { return true ? m_window.isOpen() : false; };
+        inline bool is_open() const { return m_window.isOpen(); }
     };
-
 }

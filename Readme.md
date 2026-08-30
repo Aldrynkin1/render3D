@@ -17,7 +17,7 @@
 
 1. Создайте новую папку, откройте в ней терминал и клонируйте репозиторий:
    ```bash
-   git clone https://github.com
+   git clone https://github.com/Aldrynkin1/render3D
    cd render3D
    ```
 
